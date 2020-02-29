@@ -1,0 +1,95 @@
+---
+title: "gather"
+author: "Chase Souder"
+date: "2/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+library(dplyr)
+library(readxl)
+library(readr)
+```
+
+```{r Pull Tables, echo = FALSE}
+
+pull_tables <- function(data) {
+  read_html(data) %>%
+    html_nodes("table")
+}  
+
+```
+
+```{r Debate Transcripts, echo = FALSE}
+
+dem_debate_script <- read_csv("democratic-debate-transcripts-2020.zip")
+
+```
+
+```{r Gather Real Clear Politics, echo = FALSE}
+
+# Need to get more data in here - only getting 49 observations, plus only need 
+# up to New Hampshire - unless transcript data updated
+
+rcp_url <- paste0("https://www.realclearpolitics.com/epolls/2020/president/us/2020_democratic_presidential_nomination-6730.html#polls")
+
+rcp_html <- read_html(rcp_url)
+
+rcp_tab <- rcp_html %>%
+  html_nodes("table")
+
+polling_data_recent <- rcp_tab[[4]] %>%
+  html_table()
+
+```
+
+```{r Gather NH NYT, echo = FALSE}
+
+nyt_NH_url <- paste0("https://www.nytimes.com/interactive/2020/02/08/opinion/who-won-democratic-debate.html")
+
+nyt_NH_html <- read_html(nyt_NH_url)
+
+#Unclear how to get data - it isn't a table (I think)
+```
+
+```{r Gather IA NYT, echo = FALSE}
+
+nyt_IA_url <- paste0("https://www.nytimes.com/interactive/2020/01/15/opinion/democratic-debate-who-won.html")
+
+nyt_IA_html <- read_html(nyt_IA_url)
+
+```
+
+```{r Gather Dec NYT, echo = FALSE}
+
+nyt_DEC_url <- paste0("https://www.nytimes.com/interactive/2019/12/20/opinion/debate-winner-losers.html")
+
+nyt_DEC_html <- read_html(nyt_DEC_url)
+
+```
+
+```{r Gather Nov NYT, echo = FALSE}
+
+nyt_NOV_url <- paste0("https://www.nytimes.com/interactive/2019/11/21/opinion/debate-winners-losers.html")
+
+nyt_NOV_html <- read_html(nyt_NOV_url)
+
+```
+
+```{r Gather Oct NYT, echo = FALSE}
+
+nyt_OCT_url <- paste0("https://www.nytimes.com/interactive/2019/10/16/opinion/debate-winners.html")
+
+nyt_OCT_html <- read_html(nyt_OCT_url)
+```
+
+```{r Gather Homemade WashPost, echo = FALSE}
+
+# I'm currently working on a spreadsheet tracking the winners/losers from WaPo, 
+# because unfortunately they don't have nice graphics like NYT. Sad. Spreadsheet 
+# not nearly far enough along to warrant loading it here.
+
+```
