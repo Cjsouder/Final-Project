@@ -1,0 +1,35 @@
+---
+title: "ms_3"
+author: "Chase Souder"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## About
+Link to Repository: https://github.com/Cjsouder/Final-Project
+
+This project sets out to analyze the relationship between the 2020 Democratic 
+Primary Debates and polling numbers, specifically immediate changes in polling. The
+idea is to complete speech analyses on each candidate per each debate, judging each 
+candidate on their positivity/negativity and offense/neutral/defense. I'll take this
+data and compare that to who the NYT and WashPost (and maybe the WSJ/whoever else?)
+declared the winner to try and analyze trends. I'll also be comparing the
+"winners/losers" to the next-day polling changes to see whether or not perceived 
+debate success/failure makes a difference in public opinion polling. 
+
+As far as what data I'm using specifically, I'll be using a very helpful excel sheet
+from kaggle.com which lists out virtually every detail I could want to know about 
+each debate up until New Hampshire, including speaker, speaking time, transcript of
+statements, etc. My analysis of who wins/loses will be drawn from editorials by the
+New York Times and Washington Post, both drawn from their website, although my method with Washington Post is currently creating a homemade excel sheet tracking
+the data, since they don't have handy visuals. Finally, I'm using polling data 
+compiled on RealClearPolitics.com, as they have a vast array of polls and it is
+conveniently formatted. 
+
+My plan moving forward is to ensure I get all the relevant data and ONLY relevant
+data pulled out into my gather.Rmd. That includes wrapping up my WashPo spreadsheet,
+as well as scraping the actual numbers themselves from the NYT. After that I'll 
+begin working on my speech analysis (probably not of every debate, probably just back to October, though we'll see if I want more data after I have that).
