@@ -88,8 +88,8 @@ nyt_OCT_html <- read_html(nyt_OCT_url)
 
 ```{r Gather Homemade WashPost, echo = FALSE}
 
-# I'm currently working on a spreadsheet tracking the winners/losers from WaPo, 
-# because unfortunately they don't have nice graphics like NYT. Sad. Spreadsheet 
-# not nearly far enough along to warrant loading it here.
+WashPo <- read_excel("WashingtonPostWinnersLosers.xlsx")
+
+
 
 ```
