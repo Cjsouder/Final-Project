@@ -1,5 +1,5 @@
 ---
-title: "gather"
+title: "MS5"
 author: "Chase Souder"
 date: "2/28/2020"
 output: html_document
@@ -23,13 +23,13 @@ pull_tables <- function(data) {
 
 ```
 
-```{r Debate Transcripts, echo = FALSE}
+```{r Debate Transcripts, include = FALSE}
 
 dem_debate_script <- read_csv("democratic-debate-transcripts-2020.zip")
 
 ```
 
-```{r Gather Real Clear Politics, echo = FALSE}
+```{r Gather Real Clear Politics, include = FALSE}
 
 # Need to get more data in here - only getting 49 observations, plus only need 
 # up to New Hampshire - unless transcript data updated
@@ -44,9 +44,11 @@ rcp_tab <- rcp_html %>%
 polling_data_recent <- rcp_tab[[4]] %>%
   html_table()
 
+
+
 ```
 
-```{r Gather NH NYT, echo = FALSE}
+```{r Gather NH NYT, include = FALSE}
 
 nyt_NH_url <- paste0("https://www.nytimes.com/interactive/2020/02/08/opinion/who-won-democratic-debate.html")
 
@@ -55,7 +57,7 @@ nyt_NH_html <- read_html(nyt_NH_url)
 #Unclear how to get data - it isn't a table (I think)
 ```
 
-```{r Gather IA NYT, echo = FALSE}
+```{r Gather IA NYT, include = FALSE}
 
 nyt_IA_url <- paste0("https://www.nytimes.com/interactive/2020/01/15/opinion/democratic-debate-who-won.html")
 
@@ -63,7 +65,7 @@ nyt_IA_html <- read_html(nyt_IA_url)
 
 ```
 
-```{r Gather Dec NYT, echo = FALSE}
+```{r Gather Dec NYT, include = FALSE}
 
 nyt_DEC_url <- paste0("https://www.nytimes.com/interactive/2019/12/20/opinion/debate-winner-losers.html")
 
@@ -71,7 +73,7 @@ nyt_DEC_html <- read_html(nyt_DEC_url)
 
 ```
 
-```{r Gather Nov NYT, echo = FALSE}
+```{r Gather Nov NYT, include = FALSE}
 
 nyt_NOV_url <- paste0("https://www.nytimes.com/interactive/2019/11/21/opinion/debate-winners-losers.html")
 
@@ -90,6 +92,38 @@ nyt_OCT_html <- read_html(nyt_OCT_url)
 
 WashPo <- read_excel("WashingtonPostWinnersLosers.xlsx")
 
+```
+
+```{r MS5, echo = FALSE}
+
+NYTscorescsv <- read.csv("NYTscores.csv") 
 
 
+NYTscores <- NYTscorescsv %>%
+  pivot_longer(cols = c("New.Hampshire",
+                        "Iowa",
+                        "December",
+                        "November",
+                        "October"),
+               names_to = "Debate",
+               values_to = "Score") %>%
+  group_by(Candidate) %>%
+  mutate(Debate = as.factor(Debate))
+
+NYTscores$Debate <- NYTscores$Debate %>%
+  fct_relevel("October", 
+              "November",
+              "December",
+              "Iowa",
+              "New.Hampshire")
+
+ggplot(NYTscores, aes(x = Debate, y = Score, color = Candidate)) +
+  geom_point() +
+  geom_smooth(method = loess,
+              formula = y ~ x) +
+  theme_classic() +
+  labs(title = "New York Times Democratic Debate Candidate Scores",
+       x = "Debate",
+       y = "Score (out of 10)",
+       subtitle = "* score of 0 indicates a missed debate")
 ```
